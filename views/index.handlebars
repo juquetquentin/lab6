@@ -5,6 +5,8 @@
 	<title>HCI Project Portfolio</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="google-signin-scope" content="profile email">
+	<meta name="google-signin-client_id" content="1000965380219-6is2ojcfa0milmgqfnqkv51b8q4jjsfr.apps.googleusercontent.com">
 	<link href="/css/bootstrap.min.css" rel="stylesheet">
 	<link href="/css/bootstrap-theme.min.css" rel="stylesheet">
 	<link href="/css/introHCI.css" rel="stylesheet">
@@ -17,9 +19,13 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
 
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
 	<script src="https://code.jquery.com/jquery.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
 	<script src="/js/introHCI.js"></script>
+	{{> facebook}}
+	<script src="/js/facebook.js"></script>
+	<script src="/js/google.js"></script>
 </head>
 
 <body>
@@ -29,7 +35,15 @@
 		<div class="jumbotron">
 			<h1 id="name">Scott Klemmer</h1>
 			<p>human-computer interaction &middot; social computing &middot; crowdsourcing</p>
-			<p class="facebookLogin">Please login through Facebook</p>
+			<p class="facebookLogin">
+				Please login through Facebook
+				<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+				</fb:login-button>
+			</p>
+			<p class="googleLogin">
+				Please login through Google
+				<div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+			</p>
 		</div>
 
 		<div id="facebookPhoto" class="profile">
@@ -44,7 +58,7 @@
 		{{#each projects}}
 		<div class="project" id="{{id}}">
 			<div class="thumbnail">
-				<a href="#">
+				<a id="{{id}}" href="#" onclick="addProjectDetails(window.event);">
 					<img src="images/{{image}}" alt="Lorem Pixel image" class="img">
 					<p>{{name}}</p>
 				</a>
